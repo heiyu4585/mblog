@@ -25,3 +25,5 @@ yarn-error.log*
 /blog-admin/node_modules
 /blog-view/.idea
 /blog-view/node_modules
+/blog-api/target
+/blog-api/log

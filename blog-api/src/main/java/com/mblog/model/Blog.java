@@ -3,6 +3,8 @@ package com.mblog.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.GeneratedValue;
 import lombok.Data;
 
 import java.util.Date;
@@ -12,7 +14,9 @@ import java.util.Date;
 @Table(name = "blog")
 public class Blog {
     @Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;//文章id
+
 	private String title;//文章标题
 	private String firstPicture;//文章首图，用于随机文章展示
 	private String content;//文章正文

@@ -8,9 +8,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Optional;
 
-
-// This will be AUTO IMPLEMENTED by Spring into a Bean called userRepository
-// CRUD refers Create, Read, Update, Delete
 public interface BlogRepository extends JpaRepository<Blog, Integer> {
 
     @Query(value = "select b from Blog b where b.title like concat('%', :title, '%')")

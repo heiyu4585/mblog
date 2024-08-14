@@ -1,16 +1,13 @@
 package com.mblog.controller;
+
 import com.mblog.model.Blog;
 import com.mblog.service.BlogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller	// This means that this class is a Controller
+@RestController	// This means that this class is a Controller
 @RequestMapping(path="/") // This means URL's start with /demo (after Application path)
 public class BlogController {
 	@Autowired // This means to get the bean called userRepository
@@ -32,6 +29,18 @@ public class BlogController {
 	public @ResponseBody Iterable<Blog> getAllUsers() {
 		// This returns a JSON or XML with the users
 		return blogRepository.findAll();
+	}
+
+
+	@PostMapping(path="/addBlog")
+	public String addBlog (@RequestBody Blog blog) {
+		blogRepository.save(blog);
+		return "save";
+	}
+
+	@PostMapping(path="/delById")
+	public void delById (String id) {
+		blogRepository.deleteById(Integer.parseInt(id));
 	}
 
 	@ResponseBody
