@@ -15,25 +15,29 @@
 			</el-row>
 
 			<el-form-item label="文章描述" prop="description">
-				<mavon-editor v-model="form.description"/>
+				<mavon-editor v-model="form.description" />
 			</el-form-item>
 
 			<el-form-item label="文章正文" prop="content">
-				<mavon-editor v-model="form.content"/>
+				<mavon-editor v-model="form.content" />
 			</el-form-item>
 
 			<el-row :gutter="20">
 				<el-col :span="12">
-					<el-form-item label="分类" prop="cate">
-						<el-select v-model="form.cate" placeholder="请选择分类（输入可添加新分类）" :allow-create="true" :filterable="true" style="width: 100%;">
-							<el-option :label="item.name" :value="item.id" v-for="item in categoryList" :key="item.id"></el-option>
+					<el-form-item label="分类" prop="categoryId">
+						<el-select v-model="form.categoryId" placeholder="请选择分类（输入可添加新分类）" :allow-create="true"
+							:filterable="true" style="width: 100%;">
+							<el-option :label="item.name" :value="item.id" v-for="item in categoryList"
+								:key="item.id"></el-option>
 						</el-select>
 					</el-form-item>
 				</el-col>
 				<el-col :span="12">
 					<el-form-item label="标签" prop="tagList">
-						<el-select v-model="form.tagList" placeholder="请选择标签（输入可添加新标签）" :allow-create="true" :filterable="true" :multiple="true" style="width: 100%;">
-							<el-option :label="item.name" :value="item.id" v-for="item in tagList" :key="item.id"></el-option>
+						<el-select v-model="form.tagList" placeholder="请选择标签（输入可添加新标签）" :allow-create="true"
+							:filterable="true" :multiple="true" style="width: 100%;">
+							<el-option :label="item.name" :value="item.id" v-for="item in tagList"
+								:key="item.id"></el-option>
 						</el-select>
 					</el-form-item>
 				</el-col>
@@ -47,7 +51,8 @@
 				</el-col>
 				<el-col :span="8">
 					<el-form-item label="阅读时长(分钟)" prop="readTime">
-						<el-input v-model="form.readTime" placeholder="请输入阅读时长（可选）默认 Math.round(字数 / 200)" type="number"></el-input>
+						<el-input v-model="form.readTime" placeholder="请输入阅读时长（可选）默认 Math.round(字数 / 200)"
+							type="number"></el-input>
 					</el-form-item>
 				</el-col>
 				<el-col :span="8">
@@ -58,7 +63,7 @@
 			</el-row>
 
 			<el-form-item style="text-align: right;">
-				<el-button type="primary" @click="dialogVisible=true">保存</el-button>
+				<el-button type="primary" @click="dialogVisible = true">保存</el-button>
 			</el-form-item>
 		</el-form>
 
@@ -73,10 +78,10 @@
 						<el-radio :label="3">密码保护</el-radio>
 					</el-radio-group>
 				</el-form-item>
-				<el-form-item label="密码" v-if="radio===3">
+				<el-form-item label="密码" v-if="radio === 3">
 					<el-input v-model="form.password"></el-input>
 				</el-form-item>
-				<el-form-item v-if="radio!==2">
+				<el-form-item v-if="radio !== 2">
 					<el-row>
 						<el-col :span="6">
 							<el-switch v-model="form.appreciation" active-text="赞赏"></el-switch>
@@ -95,7 +100,7 @@
 			</el-form>
 			<!--底部-->
 			<span slot="footer">
-				<el-button @click="dialogVisible=false">取 消</el-button>
+				<el-button @click="dialogVisible = false">取 消</el-button>
 				<el-button type="primary" @click="submit">保存</el-button>
 			</span>
 		</el-dialog>
@@ -103,117 +108,117 @@
 </template>
 
 <script>
-	import Breadcrumb from "@/components/Breadcrumb";
-	import {getCategoryAndTag, saveBlog, getBlogById, updateBlog} from '@/api/blog'
+import Breadcrumb from "@/components/Breadcrumb";
+import { getTags, getCategories, saveBlog, getBlogById, updateBlog } from '@/api/blog'
 
-	export default {
-		name: "WriteBlog",
-		components: {Breadcrumb},
-		data() {
-			return {
-				categoryList: [],
+export default {
+	name: "WriteBlog",
+	components: { Breadcrumb },
+	data() {
+		return {
+			categoryList: [],
+			tagList: [],
+			dialogVisible: false,
+			radio: 1,
+			form: {
+				title: '',
+				firstPicture: '',
+				description: '',
+				content: '',
+				categoryId: null,
 				tagList: [],
-				dialogVisible: false,
-				radio: 1,
-				form: {
-					title: '',
-					firstPicture: '',
-					description: '',
-					content: '',
-					cate: null,
-					tagList: [],
-					words: null,
-					readTime: null,
-					views: 0,
-					appreciation: false,
-					recommend: false,
-					commentEnabled: false,
-					top: false,
-					published: false,
-					password: '',
-				},
-				formRules: {
-					title: [{required: true, message: '请输入标题', trigger: 'change'}],
-					firstPicture: [{required: true, message: '请输入首图链接', trigger: 'change'}],
-					cate: [{required: true, message: '请选择分类', trigger: 'change'}],
-					tagList: [{required: true, message: '请选择标签', trigger: 'change'}],
-					words: [{required: true, message: '请输入文章字数', trigger: 'change'}],
-				},
+				words: null,
+				readTime: null,
+				views: 0,
+				appreciation: false,
+				recommend: false,
+				commentEnabled: false,
+				top: false,
+				published: false,
+				password: '',
+			},
+			formRules: {
+				title: [{ required: true, message: '请输入标题', trigger: 'change' }],
+				firstPicture: [{ required: true, message: '请输入首图链接', trigger: 'change' }],
+				categoryId: [{ required: true, message: '请选择分类', trigger: 'change' }],
+				tagList: [{ required: true, message: '请选择标签', trigger: 'change' }],
+				words: [{ required: true, message: '请输入文章字数', trigger: 'change' }],
+			},
+		}
+	},
+	watch: {
+		'form.words'(newValue) {
+			this.form.readTime = newValue ? Math.round(newValue / 200) : null
+		},
+	},
+	created() {
+		this.getData()
+		if (this.$route.params.id) {
+			this.getBlog(this.$route.params.id)
+		}
+	},
+	methods: {
+		getData() {
+			getTags().then(res => {
+				this.tagList = res.data.list
+			})
+			getCategories().then(res => {
+				this.categoryList = res.data.list
+			})
+		},
+		getBlog(id) {
+			getBlogById(id).then(res => {
+				// this.computeCategoryAndTag(res.data)
+				this.form = res.data
+				this.radio = this.form.published ? (this.form.password !== '' ? 3 : 1) : 2
+			})
+		},
+		computeCategoryAndTag(blog) {
+			blog.categoryId = blog.category.id
+			blog.tagList = []
+			blog.tags.forEach(item => {
+				blog.tagList.push(item.id)
+			})
+		},
+		submit() {
+			if (this.radio === 3 && (this.form.password === '' || this.form.password === null)) {
+				return this.msgError("密码保护模式必须填写密码！")
 			}
-		},
-		watch: {
-			'form.words'(newValue) {
-				this.form.readTime = newValue ? Math.round(newValue / 200) : null
-			},
-		},
-		created() {
-			this.getData()
-			if (this.$route.params.id) {
-				this.getBlog(this.$route.params.id)
-			}
-		},
-		methods: {
-			getData() {
-				getCategoryAndTag().then(res => {
-					this.categoryList = res.data.categories
-					this.tagList = res.data.tags
-				})
-			},
-			getBlog(id) {
-				getBlogById(id).then(res => {
-					this.computeCategoryAndTag(res.data)
-					this.form = res.data
-					this.radio = this.form.published ? (this.form.password !== '' ? 3 : 1) : 2
-				})
-			},
-			computeCategoryAndTag(blog) {
-				blog.cate = blog.category.id
-				blog.tagList = []
-				blog.tags.forEach(item => {
-					blog.tagList.push(item.id)
-				})
-			},
-			submit() {
-				if (this.radio === 3 && (this.form.password === '' || this.form.password === null)) {
-					return this.msgError("密码保护模式必须填写密码！")
-				}
-				this.$refs.formRef.validate(valid => {
-					if (valid) {
-						if (this.radio === 2) {
-							this.form.appreciation = false
-							this.form.recommend = false
-							this.form.commentEnabled = false
-							this.form.top = false
-							this.form.published = false
-						} else {
-							this.form.published = true
-						}
-						if (this.radio !== 3) {
-							this.form.password = ''
-						}
-						if (this.$route.params.id) {
-							this.form.category = null
-							this.form.tags = null
-							updateBlog(this.form).then(res => {
-								this.msgSuccess(res.msg)
-								this.$router.push('/blog/list')
-							})
-						} else {
-							saveBlog(this.form).then(res => {
-								this.msgSuccess(res.msg)
-								this.$router.push('/blog/list')
-							})
-						}
+			this.$refs.formRef.validate(valid => {
+				if (valid) {
+					if (this.radio === 2) {
+						this.form.appreciation = false
+						this.form.recommend = false
+						this.form.commentEnabled = false
+						this.form.top = false
+						this.form.published = false
 					} else {
-						this.dialogVisible = false
-						return this.msgError('请填写必要的表单项')
+						this.form.published = true
 					}
-				})
-			}
+					if (this.radio !== 3) {
+						this.form.password = ''
+					}
+					if (this.$route.params.id) {
+						this.form.categoryId = null
+						this.form.tags = null
+						updateBlog(this.form).then(res => {
+							this.msgSuccess(res.msg)
+							this.$router.push('/blog/list')
+						})
+					} else {
+						saveBlog(this.form).then(res => {
+							this.msgSuccess(res.msg)
+							this.$router.push('/blog/list')
+						})
+					}
+				} else {
+					this.dialogVisible = false
+					return this.msgError('请填写必要的表单项')
+				}
+			})
 		}
 	}
+}
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -58,7 +58,7 @@
 			getUserInfo() {
 				this.user = JSON.parse(window.localStorage.getItem('user') || null)
 				if (!this.user) {
-					this.$router.push('/login')
+					// this.$router.push('/login')
 				}
 			},
 			logout() {

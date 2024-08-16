@@ -12,7 +12,7 @@ export function getDataByQuery(queryInfo) {
 
 export function deleteBlogById(id) {
 	return axios({
-		url: 'blog',
+		url: 'deleteBlogById',
 		method: 'DELETE',
 		params: {
 			id
@@ -20,16 +20,26 @@ export function deleteBlogById(id) {
 	})
 }
 
-export function getCategoryAndTag() {
+export function getTags(queryInfo) {
 	return axios({
-		url: 'categoryAndTag',
+		url: 'tags',
+		method: 'GET',
+		params: {
+			...queryInfo
+		}
+	})
+}
+
+export function getCategories() {
+	return axios({
+		url: 'categories',
 		method: 'GET'
 	})
 }
 
 export function saveBlog(blog) {
 	return axios({
-		url: 'blog',
+		url: 'addBlog',
 		method: 'POST',
 		data: {
 			...blog
@@ -71,7 +81,7 @@ export function updateVisibility(id, form) {
 
 export function getBlogById(id) {
 	return axios({
-		url: 'blog',
+		url: 'getBlog',
 		method: 'GET',
 		params: {
 			id

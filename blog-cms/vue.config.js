@@ -36,6 +36,14 @@ module.exports = {
 			warnings: false,
 			errors: true
 		},
+		proxy: {
+			'/admin': {
+				target: 'http://localhost:8080/',
+				pathRewrite: {'^/admin' : ''},
+				changeOrigin: true,     // target是域名的话，需要这个参数，
+				secure: false,          // 设置支持https协议的代理
+			}
+		}
 	},
 	configureWebpack: {
 		// provide the app's title in webpack's name field, so that
@@ -64,19 +72,19 @@ module.exports = {
 
 		// set svg-sprite-loader
 		config.module
-		.rule('svg')
-		.exclude.add(resolve('src/icons'))
-		.end()
+			.rule('svg')
+			.exclude.add(resolve('src/icons'))
+			.end()
 		config.module
-		.rule('icons')
-		.test(/\.svg$/)
-		.include.add(resolve('src/icons'))
-		.end()
-		.use('svg-sprite-loader')
-		.loader('svg-sprite-loader')
-		.options({
-			symbolId: 'icon-[name]'
-		})
-		.end()
+			.rule('icons')
+			.test(/\.svg$/)
+			.include.add(resolve('src/icons'))
+			.end()
+			.use('svg-sprite-loader')
+			.loader('svg-sprite-loader')
+			.options({
+				symbolId: 'icon-[name]'
+			})
+			.end()
 	}
 }

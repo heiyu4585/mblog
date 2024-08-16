@@ -5,9 +5,17 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Column;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.FetchType;
 import lombok.Data;
 
+//import com.mblog.model.Category;
 import java.util.Date;
+import java.util.List;
+import java.util.ArrayList;
 
 @Data
 @Entity // This tells Hibernate to make a table out of this class
@@ -16,7 +24,6 @@ public class Blog {
     @Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;//文章id
-
 	private String title;//文章标题
 	private String firstPicture;//文章首图，用于随机文章展示
 	private String content;//文章正文
@@ -32,12 +39,14 @@ public class Blog {
 	private Integer words;//文章字数
 	private Integer readTime;//阅读时长(分钟)
 	private String password;//密码保护
+	private Integer categoryId;
 
-//	public Blog(String title, String content) {
-//		this.title = title;
-//		this.content = content;
-//	}
-//	private User user;//文章作者(因为是个人博客，也可以不加作者字段，暂且加上)
-//	private Category category;//文章分类
-//	private List<Tag> tags = new ArrayList<>();//文章标签
+	@ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
+	@CollectionTable(name = "tags", joinColumns = @JoinColumn(name = "id"))
+	@Column(name = "tag", nullable = false)
+	private List<String> tagList = new ArrayList<>();
+// TODO 构造器作用
+	/*public Blog() {
+
+	}*/
 }
