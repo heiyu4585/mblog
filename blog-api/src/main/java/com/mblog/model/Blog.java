@@ -12,7 +12,6 @@ import jakarta.persistence.CollectionTable;
 import jakarta.persistence.FetchType;
 import lombok.Data;
 
-//import com.mblog.model.Category;
 import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
