@@ -35,19 +35,19 @@ public class LoginController {
     public static final String ADMIN_PREFIX = "admin:";
     @PostMapping(path="/login")
     public Result login (@RequestBody LoginInfo loginInfo)throws IOException, ServletException {
-
-        User user = userRepository.findByUsernameAndPassword(loginInfo.getUsername(), loginInfo.getPassword());
-
         Map<String, Object> map = new HashMap<>();
-
         try {
+            User user = userRepository.findByUsernameAndPassword(loginInfo.getUsername(), loginInfo.getPassword());
             String jwt = JWTProvider.generateToken(loginInfo.getUsername());
-            user.setPassword(null);
-            map.put("user", user);
-            map.put("token", jwt);
+            if(null != user){
+                user.setPassword(null);
+                map.put("user", user);
+                map.put("token", jwt);
+                return Result.ok("登录成功",map);
+            }
         } catch (BadCredentialsException ex) {
-            map.put("error", ex.getMessage());
+            return Result.error(ex.getMessage());
         }
-        return Result.ok("登录成功",map);
+        return Result.error("登录失败");
     }
 }
