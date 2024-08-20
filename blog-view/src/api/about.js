@@ -2,7 +2,7 @@ import axios from '@/plugins/axios'
 
 export function getAbout() {
 	return axios({
-		url: 'about',
+		url: 'getAbout',
 		method: 'GET'
 	})
 }
