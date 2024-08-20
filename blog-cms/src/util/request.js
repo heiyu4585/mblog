@@ -16,9 +16,9 @@ request.interceptors.request.use(config => {
 	const userJson = window.localStorage.getItem('user') || '{}'
 	const user = JSON.parse(userJson)
 	if (userJson !== '{}' && user.role !== 'ROLE_admin' && config.method !== 'get') {
-		config.cancelToken = new CancelToken(function executor(cancel) {
-			cancel('演示模式，不允许操作')
-		})
+		// config.cancelToken = new CancelToken(function executor(cancel) {
+		// 	cancel('演示模式，不允许操作')
+		// })
 		return config
 	}
 
@@ -47,8 +47,9 @@ request.interceptors.response.use(response => {
 	return res
 },
 	error => {
+		NProgress.done();
 		console.info(error)
-		Message.error(error.message)
+		Message.error(error.message);
 		return Promise.reject(error)
 	}
 )

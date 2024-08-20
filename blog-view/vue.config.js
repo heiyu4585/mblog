@@ -1,4 +1,5 @@
 module.exports = {
+	outputDir: "view",
 	devServer: {
 		port: "8082",
 		open: true,
@@ -9,7 +10,7 @@ module.exports = {
 		proxy: {
 			'/api': {
 				target: 'http://localhost:8080/',
-				pathRewrite: {'^/api' : ''},
+				pathRewrite: { '^/api': '' },
 				changeOrigin: true,     // target是域名的话，需要这个参数，
 				secure: false,          // 设置支持https协议的代理
 			}

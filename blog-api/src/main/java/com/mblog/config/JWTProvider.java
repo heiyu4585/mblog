@@ -14,6 +14,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -75,9 +76,9 @@ public class JWTProvider {
     public static boolean validateToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(secretKey).build().parse(token);
-            Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+//            Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
 //            String tokenUsername = claims.getSubject();
-            Date expiration = claims.getExpiration();
+//            Date expiration = claims.getExpiration();
 //            return expiration.before(new Date());
             return true;
         } catch (MalformedJwtException e) {
@@ -91,6 +92,7 @@ public class JWTProvider {
         }
         return false;
     }
+
     /**
      * 获取tokenBody同时校验token是否有效（无效则会抛出异常）
      *
