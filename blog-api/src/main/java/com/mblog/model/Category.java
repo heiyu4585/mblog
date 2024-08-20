@@ -6,11 +6,6 @@ import lombok.Data;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @Description: 博客分类
- * @Author: Naccl
- * @Date: 2020-07-26
- */
 @Data
 @Entity // This tells Hibernate to make a table out of this class
 public class Category {

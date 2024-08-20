@@ -28,5 +28,9 @@ public interface BlogRepository extends JpaRepository<Blog, Integer> {
 
     @Query(value = "select count(*) from Blog",nativeQuery = true)
     Integer findCount();
+
+    @Query(value = "select * from Blog ORDER BY rand()",nativeQuery = true)
+    List <Blog> findRandBLogs( );
+
 }
 

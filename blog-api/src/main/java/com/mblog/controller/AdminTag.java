@@ -9,11 +9,18 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController	// This means that this class is a Controller
 @RequestMapping(path="/") // This means URL's start with /demo (after Application path)
 public class AdminTag {
     @Autowired // This means to get the bean called userRepository
     private AdminTagRepository adminTagRepository;
+
+    @GetMapping(path="/getTagAll")
+    public @ResponseBody List<Tag> getTagAll() {
+        return adminTagRepository.findAll();
+    }
 
     @GetMapping(path="/tags")
     public Result getAllPage(@RequestParam(value = "page",defaultValue = "0") Integer page) {

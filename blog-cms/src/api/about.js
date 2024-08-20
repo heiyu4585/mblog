@@ -2,15 +2,15 @@ import axios from '@/util/request'
 
 export function getAbout() {
 	return axios({
-		url: 'about',
+		url: 'getAbout',
 		method: 'GET'
 	})
 }
 
 export function updateAbout(form) {
 	return axios({
-		url: 'about',
-		method: 'PUT',
+		url: 'updateAbout',
+		method: 'POST',
 		data: {
 			...form
 		}

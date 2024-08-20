@@ -9,7 +9,7 @@ export function getHitokoto() {
 
 export function getSite() {
 	return axios({
-		url: 'site',
+		url: 'getSite',
 		method: 'GET'
 	})
 }

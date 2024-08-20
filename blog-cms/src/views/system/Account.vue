@@ -5,14 +5,15 @@
 				<span>修改当前登录账户</span>
 			</div>
 			<el-form :model="account" label-width="50px">
-				<el-form-item label="账号">
-					<el-input v-model="account.username"></el-input>
+				<el-form-item label="账号" disabled>
+					<el-input v-model="account.username" disabled></el-input>
 				</el-form-item>
 				<el-form-item label="密码">
 					<el-input v-model="account.password"></el-input>
 				</el-form-item>
 				<el-popconfirm title="确定修改吗？" icon="el-icon-user-solid" iconColor="#409EFF" @onConfirm="save">
-					<el-button type="primary" size="medium" icon="el-icon-check" slot="reference" :disabled="!account.username || !account.password">确认修改</el-button>
+					<el-button type="primary" size="medium" icon="el-icon-check" slot="reference"
+						:disabled="!account.username || !account.password">确认修改</el-button>
 				</el-popconfirm>
 			</el-form>
 		</el-card>
@@ -20,7 +21,7 @@
 </template>
 
 <script>
-import {changeAccount} from "@/api/account";
+import { changeAccount } from "@/api/account";
 
 export default {
 	name: "Setting",

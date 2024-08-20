@@ -2,7 +2,7 @@ import axios from '@/plugins/axios'
 
 export function getBlogById(token, id) {
 	return axios({
-		url: 'blog',
+		url: 'getBlog',
 		method: 'GET',
 		headers: {
 			Authorization: token,

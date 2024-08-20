@@ -4,11 +4,6 @@ import cn.hutool.core.lang.hash.MurmurHash;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.DigestUtils;
 
-/**
- * @Description: Hash工具类
- * @Author: Naccl
- * @Date: 2020-11-17
- */
 public class HashUtils {
 	private static final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
