@@ -39,7 +39,7 @@ module.exports = {
 		proxy: {
 			'/admin': {
 				target: 'http://localhost:8080/',
-				pathRewrite: {'^/admin' : ''},
+				pathRewrite: { '^/admin': '' },
 				changeOrigin: true,     // target是域名的话，需要这个参数，
 				secure: false,          // 设置支持https协议的代理
 			}

@@ -8,6 +8,7 @@ import com.mblog.service.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.web.bind.annotation.*;
 import com.mblog.config.JWTProvider;
 import java.io.IOException;
@@ -25,7 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController	// This means that this class is a Controller
-@RequestMapping(path="/admin") // This means URL's start with /demo (after Application path)
+@RequestMapping(path="/") // This means URL's start with /demo (after Application path)
 public class LoginController {
     @Autowired // This means to get the bean called userRepository
     private UserRepository userRepository;
@@ -49,5 +50,19 @@ public class LoginController {
             return Result.error(ex.getMessage());
         }
         return Result.error("登录失败");
+    }
+
+    @PostMapping("/account")
+    public Result account(@RequestBody User user, @RequestHeader(value = "Authorization", defaultValue = "") String jwt) {
+        String username = JWTProvider.getTokenBody(jwt).getSubject();
+
+       if(!username.equals( user.getUsername())){
+           return Result.error("修改失败");
+       }
+        User curUser = userRepository.findUserByUsername(user.getUsername());
+        curUser.setPassword(user.getPassword());
+        userRepository.save(curUser);
+
+        return Result.ok("修改成功");
     }
 }

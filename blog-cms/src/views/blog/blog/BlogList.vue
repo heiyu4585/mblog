@@ -3,9 +3,12 @@
 		<!--搜索-->
 		<el-row>
 			<el-col :span="8">
-				<el-input placeholder="请输入标题" v-model="queryInfo.title" :clearable="true" @clear="search" @keyup.native.enter="search" size="small" style="min-width: 500px">
-					<el-select v-model="queryInfo.categoryId" slot="prepend" placeholder="请选择分类" :clearable="true" @change="search" style="width: 160px">
-						<el-option :label="item.name" :value="item.id" v-for="item in categoryList" :key="item.id"></el-option>
+				<el-input placeholder="请输入标题" v-model="queryInfo.title" :clearable="true" @clear="search"
+					@keyup.native.enter="search" size="small" style="min-width: 500px">
+					<el-select v-model="queryInfo.categoryId" slot="prepend" placeholder="请选择分类" :clearable="true"
+						@change="search" style="width: 160px">
+						<el-option :label="item.name" :value="item.id" v-for="item in categoryList"
+							:key="item.id"></el-option>
 					</el-select>
 					<el-button slot="append" icon="el-icon-search" @click="search"></el-button>
 				</el-input>
@@ -15,8 +18,8 @@
 		<el-table :data="blogList">
 			<el-table-column label="序号" type="index" width="50"></el-table-column>
 			<el-table-column label="标题" prop="title" show-overflow-tooltip></el-table-column>
-			<el-table-column label="分类" prop="category.name" width="150"></el-table-column>
-			<el-table-column label="置顶" width="80">
+			<el-table-column label="分类" prop="categoryName" width="150"></el-table-column>
+			<!-- <el-table-column label="置顶" width="80">
 				<template v-slot="scope">
 					<el-switch v-model="scope.row.top" @change="blogTopChanged(scope.row)"></el-switch>
 				</template>
@@ -25,14 +28,14 @@
 				<template v-slot="scope">
 					<el-switch v-model="scope.row.recommend" @change="blogRecommendChanged(scope.row)"></el-switch>
 				</template>
-			</el-table-column>
-			<el-table-column label="可见性" width="100">
+			</el-table-column> -->
+			<!-- <el-table-column label="可见性" width="100">
 				<template v-slot="scope">
 					<el-link icon="el-icon-edit" :underline="false" @click="editBlogVisibility(scope.row)">
 						{{ scope.row.published ? (scope.row.password !== '' ? '密码保护' : '公开') : '私密' }}
 					</el-link>
 				</template>
-			</el-table-column>
+			</el-table-column> -->
 			<el-table-column label="创建时间" width="170">
 				<template v-slot="scope">{{ scope.row.createTime | dateFormat }}</template>
 			</el-table-column>
@@ -60,7 +63,7 @@
 		<!--编辑可见性状态对话框-->
 		<el-dialog title="博客可见性" width="30%" :visible.sync="dialogVisible">
 			<!--内容主体-->
-			<el-form label-width="50px" @submit.native.prevent>
+			<!-- <el-form label-width="50px" @submit.native.prevent>
 				<el-form-item>
 					<el-radio-group v-model="radio">
 						<el-radio :label="1">公开</el-radio>
@@ -87,7 +90,7 @@
 						</el-col>
 					</el-row>
 				</el-form-item>
-			</el-form>
+			</el-form> -->
 			<!--底部-->
 			<span slot="footer">
 				<el-button @click="dialogVisible = false">取 消</el-button>
@@ -132,13 +135,20 @@ export default {
 		this.getData()
 	},
 	methods: {
-		getData() {
-			getDataByQuery(this.queryInfo).then(res => {
-				this.blogList = res.data.list
-				this.total = res.data.totalPage
-			})
-			getCategories().then(res => {
-				this.categoryList = res.data.list
+		async getData() {
+			const blogRes = await getDataByQuery(this.queryInfo)
+
+			this.total = blogRes.data.totalPage
+
+			const catRes = await getCategories()
+			this.categoryList = catRes.data.list
+
+			this.blogList = blogRes.data.list.map(item => {
+				const categoryName = this.categoryList.find(catItem => catItem.id === item.categoryId)?.name ?? "";
+				return {
+					...item,
+					categoryName
+				}
 			})
 		},
 		search() {
@@ -231,7 +241,7 @@ export default {
 </script>
 
 <style scoped>
-	.el-button + span {
-		margin-left: 10px;
-	}
+.el-button+span {
+	margin-left: 10px;
+}
 </style>

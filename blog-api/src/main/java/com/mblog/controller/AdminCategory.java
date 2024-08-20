@@ -23,8 +23,13 @@ public class AdminCategory {
 //        return adminCategoryRepository.findAll();
 //    }
 
+    @GetMapping(path="/getCategoryAll")
+    public @ResponseBody List<Category> getCategoryAll() {
+        return adminCategoryRepository.findAll();
+    }
+
     @GetMapping(path="/categories")
-    public Result getAllPage(@RequestParam(value = "page",defaultValue = "0") Integer page) {
+    public Result getCategories(@RequestParam(value = "page",defaultValue = "0") Integer page) {
         Pageable request = PageRequest.of(page, 10);
         Integer count = adminCategoryRepository.findCount();
         PageResult<Category> pageResult = new PageResult<>(count, adminCategoryRepository.findCurPage(request));

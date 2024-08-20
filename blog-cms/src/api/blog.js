@@ -13,7 +13,7 @@ export function getDataByQuery(queryInfo) {
 export function deleteBlogById(id) {
 	return axios({
 		url: 'deleteBlogById',
-		method: 'DELETE',
+		method: 'POST',
 		params: {
 			id
 		}
@@ -50,7 +50,7 @@ export function saveBlog(blog) {
 export function updateTop(id, top) {
 	return axios({
 		url: 'blog/top',
-		method: 'PUT',
+		method: 'POST',
 		params: {
 			id,
 			top
@@ -61,7 +61,7 @@ export function updateTop(id, top) {
 export function updateRecommend(id, recommend) {
 	return axios({
 		url: 'blog/recommend',
-		method: 'PUT',
+		method: 'POST',
 		params: {
 			id,
 			recommend
@@ -72,7 +72,7 @@ export function updateRecommend(id, recommend) {
 export function updateVisibility(id, form) {
 	return axios({
 		url: `blog/${id}/visibility`,
-		method: 'PUT',
+		method: 'POST',
 		data: {
 			...form
 		}
@@ -91,8 +91,8 @@ export function getBlogById(id) {
 
 export function updateBlog(blog) {
 	return axios({
-		url: 'blog',
-		method: 'PUT',
+		url: 'addBlog',
+		method: 'POST',
 		data: {
 			...blog
 		}
