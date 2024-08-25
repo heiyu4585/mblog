@@ -64,36 +64,35 @@ public class BlogController {
   @GetMapping(path = "/blogs")
   public Result getAllPage(@RequestParam(value = "page") Integer page) {
     Map<String, Object> map = new HashMap<>();
-    JedisPool pool = new JedisPool("localhost", 6379);
-    try (Jedis jedis = pool.getResource()) {
-      // 将Map转换为JSON字符串
-      ObjectMapper objectMapper = new ObjectMapper();
-      String res = jedis.get("blogs:" + page);
-      System.out.println(res);
-      if (res != null) {
-        // 将 JSON 字符串转换为 Map 对象
-        try {
-          map = objectMapper.readValue(res, Map.class);
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-        return Result.ok("请求成功", map);
-      }
+    //    JedisPool pool = new JedisPool("localhost", 6379);
+    //    try (Jedis jedis = pool.getResource()) {
+    // 将Map转换为JSON字符串
+    //      ObjectMapper objectMapper = new ObjectMapper();
+    //      String res = jedis.get("blogs:" + page);
+    //      System.out.println(res);
+    //      if (res != null) {
+    //        // 将 JSON 字符串转换为 Map 对象
+    //        try {
+    //          map = objectMapper.readValue(res, Map.class);
+    //        } catch (Exception e) {
+    //          e.printStackTrace();
+    //        }
+    //        return Result.ok("请求成功", map);
+    //      }
 
-      Pageable request = PageRequest.of(page - 1, 10);
-      Integer totalPage = (int) Math.ceil(blogRepository.findCount() / 10);
-      PageResult<Blog> pageResult =
-          new PageResult<>(totalPage, blogRepository.findCurPage(request));
-      try {
-        String jsonstring = objectMapper.writeValueAsString(pageResult);
-        // timeout.unit - must not be null
-        jedis.set("blogs:" + page, jsonstring);
-        jedis.expire("myKey", 6000);
-      } catch (JsonProcessingException e) {
-        e.printStackTrace();
-      }
-      return Result.ok("请求成功", pageResult);
-    }
+    Pageable request = PageRequest.of(page - 1, 10);
+    Integer totalPage = (int) Math.ceil(blogRepository.findCount() / 10);
+    PageResult<Blog> pageResult = new PageResult<>(totalPage, blogRepository.findCurPage(request));
+    //      try {
+    //        String jsonstring = objectMapper.writeValueAsString(pageResult);
+    //        // timeout.unit - must not be null
+    //        jedis.set("blogs:" + page, jsonstring);
+    //        jedis.expire("myKey", 6000);
+    //      } catch (JsonProcessingException e) {
+    //        e.printStackTrace();
+    //      }
+    return Result.ok("请求成功", pageResult);
+    //    }
   }
 
   @PostMapping(path = "/addBlog")

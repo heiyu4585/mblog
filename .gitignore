@@ -22,8 +22,12 @@ yarn-error.log*
 
 .idea
 /blog-admin/.idea
+/blog-admin/admin/*
 /blog-admin/node_modules
 /blog-view/.idea
+/blog-view/view/*
 /blog-view/node_modules
 /blog-api/target
 /blog-api/log/*
+/blog-cms/admin/
+/blog-view/view/
