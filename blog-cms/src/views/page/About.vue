@@ -19,7 +19,7 @@
 			</el-row>
 
 			<el-form-item label="正文" prop="content">
-				<mavon-editor v-model="form.content"/>
+				<mavon-editor v-model="form.content" />
 			</el-form-item>
 
 			<el-form-item style="text-align: right;">
@@ -30,57 +30,56 @@
 </template>
 
 <script>
-	import Breadcrumb from "@/components/Breadcrumb";
-	import {getAbout, updateAbout} from "@/api/about";
+import Breadcrumb from "@/components/Breadcrumb";
+import { getAbout, updateAbout, getTodoList, updateTodoList } from "@/api/about";
 
-	export default {
-		name: "About",
-		components: {Breadcrumb},
-		data() {
-			return {
-				form: {
-					title: '',
-					musicId: null,
-					content: '',
-					commentEnabled: true
-				},
-				formRules: {
-					title: [{required: true, message: '请输入标题', trigger: 'change'}],
-				}
-			}
-		},
-		created() {
-			this.getData()
-		},
-		methods: {
-			getData() {
-				getAbout().then(res => {
-					this.form.title = res.data.title
-					this.form.musicId = res.data.musicId
-					this.form.content = res.data.content
-					this.form.commentEnabled = res.data.commentEnabled === 'true' ? true : false
-				})
+export default {
+	name: "About",
+	components: { Breadcrumb },
+	data() {
+		return {
+			form: {
+				title: '',
+				musicId: null,
+				content: '',
+				commentEnabled: true,
 			},
-			submit() {
-				this.$refs.formRef.validate(valid => {
-					if (valid) {
-						//纯数字
-						const reg = /^\d{1,}$/
-						if (!reg.test(this.form.musicId)) {
-							return this.msgError("歌曲ID有误")
-						}
-						updateAbout(this.form).then(res => {
-							this.msgSuccess(res.msg)
-						})
-					} else {
-						return this.msgError('请填写必要的表单')
-					}
-				})
-			}
+			formRules: {
+				title: [{ required: true, message: '请输入标题', trigger: 'change' }],
+			},
+			curPath: ""
+		}
+	},
+	created() {
+		this.curPath = this.$route.path;
+		this.getData()
+	},
+	methods: {
+		async getData() {
+			const res = this.curPath.includes("about") ? await getAbout() : await getTodoList();
+
+			this.form.title = res?.data?.title ?? ""
+			this.form.musicId = res?.data?.musicId
+			this.form.content = res?.data?.content
+			this.form.commentEnabled = res?.data?.commentEnabled
+		},
+		submit() {
+			this.$refs.formRef.validate(async valid => {
+				if (valid) {
+					//纯数字
+					const reg = /^\d{1,}$/
+					// if (!reg.test(this.form.musicId)) {
+					// 	return this.msgError("歌曲ID有误")
+					// }
+					const res = this.curPath.includes("about") ? await updateAbout(this.form) : await updateTodoList(this.form);
+					this.msgSuccess(res.msg)
+				} else {
+					return this.msgError('请填写必要的表单')
+				}
+			})
 		}
 	}
+}
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

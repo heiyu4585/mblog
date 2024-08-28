@@ -16,3 +16,20 @@ export function updateAbout(form) {
 		}
 	})
 }
+
+export function getTodoList() {
+	return axios({
+		url: 'getTodoList',
+		method: 'GET'
+	})
+}
+
+export function updateTodoList(form) {
+	return axios({
+		url: 'updateTodoList',
+		method: 'POST',
+		data: {
+			...form
+		}
+	})
+}

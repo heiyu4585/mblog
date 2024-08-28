@@ -8,7 +8,7 @@ const routes = [
 	{
 		path: '/login',
 		component: () => import('@/views/Login'),
-		meta: {title: '登录'}
+		meta: { title: '登录' }
 	},
 	{
 		path: '/',
@@ -19,49 +19,55 @@ const routes = [
 				path: '/home',
 				name: 'home',
 				component: () => import('@/views/home/Home'),
-				meta: {title: '首页'}
+				meta: { title: '首页' }
 			},
 			{
 				path: '/archives',
 				name: 'archives',
 				component: () => import('@/views/archives/Archives'),
-				meta: {title: '归档'}
+				meta: { title: '归档' }
 			},
 			{
 				path: '/blog/:id',
 				name: 'blog',
 				component: () => import('@/views/blog/Blog'),
-				meta: {title: '博客'}
+				meta: { title: '博客' }
 			},
 			{
 				path: '/tag/:name',
 				name: 'tag',
 				component: () => import('@/views/tag/Tag'),
-				meta: {title: '标签'}
+				meta: { title: '标签' }
 			},
 			{
 				path: '/category/:name',
 				name: 'category',
 				component: () => import('@/views/category/Category'),
-				meta: {title: '分类'}
+				meta: { title: '分类' }
 			},
 			{
 				path: '/moments',
 				name: 'moments',
 				component: () => import('@/views/moments/Moments'),
-				meta: {title: '动态'}
+				meta: { title: '动态' }
 			},
 			{
 				path: '/friends',
 				name: 'friends',
 				component: () => import('@/views/friends/Friends'),
-				meta: {title: '友人帐'}
+				meta: { title: '友人帐' }
 			},
 			{
 				path: '/about',
 				name: 'about',
 				component: () => import('@/views/about/About'),
-				meta: {title: '关于我'}
+				meta: { title: '关于我' }
+			},
+			{
+				path: '/todoList',
+				name: 'todoList',
+				component: () => import('@/views/about/About'),
+				meta: { title: 'todoList' }
 			}
 		]
 	}

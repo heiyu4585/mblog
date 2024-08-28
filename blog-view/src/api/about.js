@@ -6,3 +6,10 @@ export function getAbout() {
 		method: 'GET'
 	})
 }
+
+export function getTodoList() {
+	return axios({
+		url: 'getTodoList',
+		method: 'GET'
+	})
+}

@@ -18,7 +18,7 @@
 						<!--中间-->
 						<div class="ten wide column">
 							<keep-alive include="Home">
-								<router-view />
+								<router-view :key="$route.path" />
 							</keep-alive>
 						</div>
 						<!--右侧-->

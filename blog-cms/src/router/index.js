@@ -121,6 +121,12 @@ const routes = [
 				component: () => import('@/views/page/About'),
 				meta: { title: '关于我', icon: 'el-icon-tickets' }
 			},
+			{
+				path: 'todoList',
+				name: 'TodoList',
+				component: () => import('@/views/page/About'),
+				meta: { title: 'todoList', icon: 'el-icon-tickets' }
+			},
 		]
 	},
 	// {
