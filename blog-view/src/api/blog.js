@@ -23,12 +23,12 @@ export function checkBlogPassword(blogPasswordForm) {
 	})
 }
 
-export function getSearchBlogList(query) {
+export function getSearchBlogList(title) {
 	return axios({
 		url: 'searchBlog',
 		method: 'GET',
 		params: {
-			query
+			title
 		}
 	})
 }

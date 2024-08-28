@@ -136,8 +136,8 @@ public class BlogController {
   }
 
   @ResponseBody
-  @GetMapping("search")
-  public List<Blog> search(String keyword) {
-    return blogRepository.findAllByTitleContains(keyword);
+  @GetMapping("searchBlog")
+  public Result search(String title) {
+    return Result.ok("", blogRepository.findBlogByTitle(title));
   }
 }
