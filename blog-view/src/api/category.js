@@ -1,12 +1,12 @@
 import axios from '@/plugins/axios'
 
-export function getBlogListByCategoryName(categoryName, pageNum) {
+export function getBlogListByCategoryName(name, page) {
 	return axios({
-		url: 'category',
+		url: 'getBlogsByCategoryName',
 		method: 'GET',
 		params: {
-			categoryName,
-			pageNum
+			name,
+			page
 		}
 	})
 }

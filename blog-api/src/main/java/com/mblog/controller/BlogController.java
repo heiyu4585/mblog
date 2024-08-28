@@ -95,6 +95,17 @@ public class BlogController {
     //    }
   }
 
+  @GetMapping(path = "/getBlogsByCategoryName")
+  public Result getBlogsByCategoryName(
+      @RequestParam(value = "page", defaultValue = "0") Integer page, String name) {
+    Pageable request = PageRequest.of(page - 1, 10);
+    Integer totalPage = (int) Math.ceil(blogRepository.getBlogsTotalByCategoryName(name) / 10);
+
+    PageResult<Blog> pageResult =
+        new PageResult<>(totalPage, blogRepository.getBlogsByCategoryName(name, request));
+    return Result.ok("请求成功", pageResult);
+  }
+
   @PostMapping(path = "/addBlog")
   public Result addBlog(@RequestBody Blog blog) {
     // 获取当前时间

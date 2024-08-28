@@ -108,7 +108,6 @@ export default {
 	},
 	methods: {
 		getSite() {
-			console.log('this.ta222222gLis')
 			getSite().then(res => {
 				if (res.code === 200) {
 					// this.siteInfo = res.data.siteInfo
