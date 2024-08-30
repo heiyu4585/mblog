@@ -22,4 +22,8 @@ public class SiteConf implements Serializable {
   @Lob
   @Column(length = 100000)
   private String content;
+
+  @Lob
+  @Column(length = 100000)
+  private String html;
 }
