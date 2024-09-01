@@ -8,6 +8,7 @@ import com.mblog.model.PageResult;
 import com.mblog.service.BlogRepository;
 import com.mblog.controller.AdminCategory;
 import com.mblog.controller.AdminTag;
+import com.mblog.service.Htmlservice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -32,6 +33,13 @@ public class BlogController {
   @Autowired private AdminCategory adminCategory;
 
   @Autowired private AdminTag adminTag;
+
+  private final Htmlservice htmlservice;
+
+  @Autowired
+  public BlogController(Htmlservice service) {
+    this.htmlservice = service;
+  }
 
   @GetMapping(path = "/getBlog")
   public Result findBlog(@RequestParam(value = "id", defaultValue = "0") Integer id) {
@@ -125,6 +133,10 @@ public class BlogController {
       blog.setCreateTime(formattedDate);
     }
     blog.setUpdateTime(formattedDate);
+    String html = htmlservice.markdownToHtml(blog.getContent());
+    System.out.println(html);
+    blog.setHtml(html);
+
     blogRepository.save(blog);
     return Result.ok("添加成功");
   }
