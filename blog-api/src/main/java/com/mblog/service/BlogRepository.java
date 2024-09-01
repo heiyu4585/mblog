@@ -23,13 +23,13 @@ public interface BlogRepository extends JpaRepository<Blog, Integer> {
   @Query(value = "select b.* from blog b where b.title = :title", nativeQuery = true)
   Optional<Blog> getByTitle2(@Param("title") String title);
 
-  @Query(value = "select * from Blog", nativeQuery = true)
+  @Query(value = "select * from blog", nativeQuery = true)
   List<Blog> findCurPage(Pageable pageable);
 
-  @Query(value = "select count(*) from Blog", nativeQuery = true)
+  @Query(value = "select count(*) from blog", nativeQuery = true)
   Integer findCount();
 
-  @Query(value = "select * from Blog ORDER BY rand()", nativeQuery = true)
+  @Query(value = "select * from blog ORDER BY rand()", nativeQuery = true)
   List<Blog> findRandBLogs();
 
   @Query(

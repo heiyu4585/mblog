@@ -8,10 +8,10 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface AdminTagRepository extends JpaRepository<Tag, Integer> {
-    @Query(value = "select * from Tag",nativeQuery = true)
+    @Query(value = "select * from tag",nativeQuery = true)
     List <Tag> findCurPage( Pageable pageable);
 
-    @Query(value = "select count(*) from Tag",nativeQuery = true)
+    @Query(value = "select count(*) from tag",nativeQuery = true)
     Integer findCount();
 }
 

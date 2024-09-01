@@ -9,10 +9,10 @@ import java.util.List;
 
 public interface AdminCategoryRepository extends JpaRepository<Category, Integer> {
 
-    @Query(value = "select * from Category",nativeQuery = true)
+    @Query(value = "select * from category",nativeQuery = true)
     List <Category> findCurPage( Pageable pageable);
 
-    @Query(value = "select count(*) from Category",nativeQuery = true)
+    @Query(value = "select count(*) from category",nativeQuery = true)
     Integer findCount();
 }
 
