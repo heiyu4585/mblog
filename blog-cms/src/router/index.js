@@ -44,12 +44,12 @@ const routes = [
 				component: () => import('@/views/blog/blog/WriteBlog'),
 				meta: { title: '写文章', icon: 'el-icon-edit' }
 			},
-			{
-				path: 'moment/write',
-				name: 'WriteMoment',
-				component: () => import('@/views/blog/moment/WriteMoment'),
-				meta: { title: '写动态', icon: 'el-icon-edit' }
-			},
+			// {
+			// 	path: 'moment/write',
+			// 	name: 'WriteMoment',
+			// 	component: () => import('@/views/blog/moment/WriteMoment'),
+			// 	meta: { title: '写动态', icon: 'el-icon-edit' }
+			// },
 			{
 				path: 'edit/:id',
 				name: 'EditBlog',
