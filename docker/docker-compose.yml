@@ -1,0 +1,47 @@
+version: "3"
+services:
+  nginx: # 服务名称，用户自定义
+    image: nginx:1.26.2  # 镜像版本
+#    container_name: web-nginx     # 容器名字
+    restart: always     # 开机自动重启
+    ports:
+      - 80:80  # 暴露端口
+      - 443:443
+    volumes: # 挂载
+      - /home/admin:/home/admin
+      - /home/view:/home/view
+      - /home/nginx.conf:/etc/nginx/nginx.conf
+      - /usr/local/nginx/cert/ssl.pem:/usr/local/nginx/cert/ssl.pem
+      - /usr/local/nginx/cert/ssl.key:/usr/local/nginx/cert/ssl.key
+    privileged: true # 这个必须要，解决nginx的文件调用的权限问题
+  mysql:
+    image: mysql:latest
+    ports:
+      - 3306:3306
+    volumes:
+      - /var/lib/mysql:/var/lib/mysql
+      - /home/conf.d:/etc/mysql/conf.d # 映射配置目录，宿主机:容器
+      #- /etc/localtime:/etc/localtime:ro # 让容器的时钟与宿主机时钟同步
+      - /var/log/mysql:/var/log/mysql # 映射日志目录，宿主机:容器
+    restart: always
+    environment: # 指定用户root的密码
+        - MYSQL_ROOT_PASSWORD='123456'
+       # - MYSQL_ROOT_HOST='%'  # needs to be enclosed with quotes
+  redis:
+    image: redis:latest
+#    container_name: web-redis
+    restart: always
+  server:
+    image: server:latest
+    build: . # 表示以当前目录下的Dockerfile开始构建镜像
+    ports:
+      - 8080:8080
+#    volumes: # 挂载
+#      - /usr/image:/usr/image
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/mydatabase?characterEncoding=utf-8&characterSetResults=utf8&autoReconnect=true&useSSL=false&allowMultiQueries=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: '123456'
+    depends_on:
+      - mysql
+      - redis
