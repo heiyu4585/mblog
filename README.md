@@ -10,4 +10,4 @@ spring boot + mysql+ vue 前后端分离个人博客
 - 安全框架：Spring Security
 - 部署: docker
 - 数据库: mysql + jpa
-- 前端: (vue)[https://github.com/Naccl/NBlog]
+- 前端: [vue](https://github.com/Naccl/NBlog)
