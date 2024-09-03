@@ -18,7 +18,7 @@ module.exports = {
 			"siteName": "blackRain'S BLOG"
 		},
 		"blogName": "blackRain's Blog",
-		"beian": "",
+		"beian": "辽ICP备2024038287号",
 		"webTitleSuffix": " - blackRain's Blog",
 		"footerImgTitle": "手机看本站",
 		"commentAdminFlag": "咕咕",
